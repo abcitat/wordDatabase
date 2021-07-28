@@ -1,0 +1,55 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+
+
+int main()
+{
+
+    char word[64];
+    bool run=1;
+    int size = 2;
+    char **dynarray = malloc(sizeof(char*) * size);
+    int len=0;
+    int last_count=0;
+
+
+    while(run){
+        scanf("%63s", &word);
+        if(strcmp(word,".")!=0){
+            dynarray[len] =  (char*) malloc(sizeof(char) * 64);
+            int count=0;
+            for(int i=0;i<=len;i++){
+                if(strcmp(word,dynarray[i])==0){
+                    count++;
+                }
+            }
+            if(count==0){
+                dynarray[len++]=strdup(word);
+                last_count++;
+                count = 0;
+            }
+
+            if(len >= size) {
+                size = 2 * size; // double its size
+                dynarray = realloc(dynarray, sizeof(char*) * size);
+            }
+
+        }
+
+
+        else
+            run=0;
+
+    }
+
+    //print array
+/*
+    for(int i=0;i<len;i++)
+        printf("%s\n",dynarray[i]);
+*/
+    printf("%d\n",last_count);
+    return 0;
+
+}
